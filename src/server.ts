@@ -252,12 +252,6 @@ app.post('/webhook', async (req, res) => {
         // Then define and call a method to handle the successful attachment of a PaymentMethod.
         // handleAuthenticationCompleted(authenticationCompletedData);
         break;
-      case 'authentication.result_updated':
-        const authenticationResultUpdatedData = event.data;
-        console.log('this is authentication result updated event');
-        // Then define and call a method to handle the successful attachment of a PaymentMethod.
-        // handleAuthenticationResultUpdated(authenticationResultUpdatedData);
-        break;
       default:
         console.log(`Unhandled event type ${event.type}`);
     }
