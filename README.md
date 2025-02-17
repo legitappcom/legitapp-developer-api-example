@@ -12,8 +12,8 @@ This is a Node.js/TypeScript application demonstrating API integration with file
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/legitapp/legitapp-developer-api-sample.git
-cd legit-app-api-integration-example
+git clone https://github.com/legitappcom/legitapp-developer-api-example.git
+cd legitapp-developer-api-example
 ```
 
 2. Install dependencies:
