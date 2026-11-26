@@ -10,9 +10,7 @@
     "dev": "ts-node-dev src/server.ts",
     "build": "tsc",
     "watch": "tsc -w",
-    "test": "npm run build && npm run postman:check && node --test test/*.test.cjs",
-    "postman:build": "node scripts/build-postman.cjs",
-    "postman:check": "node scripts/build-postman.cjs --check"
+    "test": "npm run build && node --test test/*.test.cjs"
   },
   "dependencies": {
     "axios": "^1.6.7",

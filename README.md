@@ -134,13 +134,11 @@ LegitApp currently does not sign webhook requests or include a dedicated verific
 
 ```bash
 npm test
-npm run postman:build
-npm run postman:check
 ```
 
-`npm test` compiles TypeScript, verifies that generated Postman files match their source, tests the HTTP proxy/webhook behavior, and runs both collections through Newman using temporary loopback mock servers and placeholder credentials. It does not call Sandbox or Production, upload to real storage, generate a real PDF or spend account tokens. Live API and Portal delivery checks remain part of integration verification.
+`npm test` compiles TypeScript, tests the HTTP proxy/webhook behavior, and runs both checked-in Postman collections through Newman using temporary loopback mock servers and placeholder credentials. It does not call Sandbox or Production, upload to real storage, generate a real PDF or spend account tokens. Live API and Portal delivery checks remain part of integration verification.
 
-Both collections, all three environments and webhook fixtures are maintained by [scripts/build-postman.cjs](scripts/build-postman.cjs). Change that source and regenerate the checked-in exports.
+The collections, environments and webhook fixtures in [postman/](postman/) are ready to import. To maintain a collection, edit its JSON file directly or update it in Postman and export it as Collection v2.1. Keep credentials blank in shared environment files.
 
 ## Project structure
 
@@ -149,6 +147,5 @@ src/server.ts                Environment validation and server startup
 src/app.ts                   API proxy routes and webhook switch
 src/types.ts                 Current request and webhook types
 postman/                     Direct/local collections, environments and fixtures
-scripts/build-postman.cjs    Maintained source for the Postman exports
 test/                        HTTP integration and Newman tests
 ```

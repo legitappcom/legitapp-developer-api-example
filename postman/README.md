@@ -69,10 +69,11 @@ Local webhook simulation only tests your handler. It does not verify that LegitA
 
 Saved responses are illustrative, with synthetic IDs and `example.com` URLs. Actual IDs, availability, optional fields, errors and translated messages come from the selected environment. Every request includes its expected success status, response checks and prerequisites; failures remain visible in the test results and response body.
 
-The JSON exports and webhook fixtures are generated from [build-postman.cjs](../scripts/build-postman.cjs). After changing an endpoint example, run:
+The checked-in collections and environments are ready to import into Postman. To maintain them, edit the JSON files directly or update a collection in Postman and export it as Collection v2.1. Keep credentials blank in shared environment files.
+
+Repository contributors can verify the updated files with:
 
 ```bash
-npm run postman:build
 npm test
 ```
 
