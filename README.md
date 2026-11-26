@@ -26,7 +26,7 @@ The [local example collection](postman/LegitApp-Local-Example.postman_collection
 
 ## Run the TypeScript example
 
-Use Node.js 22 or 24 and npm. The test suite uses Node's built-in test runner and Newman. npm is the documented installation path; a synchronized Yarn 1 lockfile is retained for existing users.
+Use Node.js 22 or 24 and npm. The test suite uses Node's built-in test runner and Newman. A Yarn 1 lockfile is also included.
 
 ```bash
 git clone https://github.com/legitappcom/legitapp-developer-api-example.git
@@ -35,7 +35,7 @@ npm ci
 cp .env.example .env
 ```
 
-Edit `.env` and set `LEGIT_APP_DEVELOPER_SECRET_KEY` to your Sandbox developer secret. The variable name matches the implementation. `LEGIT_APP_API_URL` defaults to the Sandbox URL **including `/v1`**.
+Edit `.env` and set `LEGIT_APP_DEVELOPER_SECRET_KEY` to your Sandbox developer secret. `LEGIT_APP_API_URL` defaults to the Sandbox URL **including `/v1`**.
 
 ```bash
 npm run dev
@@ -68,7 +68,7 @@ Create an authentication intent and open the returned `authentication_url` in a 
 
 An unrestricted and a restricted intent example are included. Restrictions can specify category, brand, model, physical tag requirements and custom code requirements. The `language` body field controls the hosted page language. Keep hosted submission URLs private.
 
-The returned `authentication_intent_id` becomes the authentication ID after successful initial submission. Submission and completion webhooks describe the later lifecycle. No GET-intent/status endpoint is invented by this example.
+The returned `authentication_intent_id` becomes the authentication ID after successful initial submission. Track photo submission and authentication completion through webhooks.
 
 ### Authentication details, PDFs and cancellation
 
@@ -114,9 +114,9 @@ The [switch statement in src/app.ts](src/app.ts) handles the six events used by 
 - `authentication.extra_photo_submission`
 - `authentication.completed`
 
-The previous `authentication.result_updated` case is removed: it is not an active documented event; the corresponding Core API emitter is commented out. Unknown event types are acknowledged without processing.
+Unknown event types receive HTTP `200` and are not processed.
 
-Each case awaits its handler before returning HTTP `200`. A thrown handler error returns `500` so a delivery can be retried. The default handlers **only log event metadata**. Replace them with your application logic and durably track `event.id` plus processing state to handle duplicate deliveries and retries. No in-memory deduplication is presented as a production guarantee.
+Each case awaits its handler before returning HTTP `200`. A thrown handler error returns `500` so a delivery can be retried. The default handlers **only log event metadata**. Replace them with your application logic and durably track `event.id` plus processing state to handle duplicate deliveries and retries.
 
 Use the six [JSON fixtures](postman/fixtures) or the local collection's **Local webhook simulations** folder to test routing. These requests do not prove actual delivery from LegitApp and do not change authentication state.
 
@@ -128,7 +128,7 @@ For actual delivery:
 4. Register the endpoint in the matching environment in the Developer Portal. Each environment has one configured webhook destination.
 5. Use the Portal's Sandbox webhook tests and inspect delivery status. For Web Submission, also complete the hosted flow to verify submission events.
 
-LegitApp currently does not sign webhook requests or include a dedicated verification header. JSON validation does not authenticate the sender. Follow the guides' IP allowlisting and private URL recommendations. This sample does not claim to verify a signature.
+LegitApp currently does not sign webhook requests or include a dedicated verification header. JSON validation does not authenticate the sender. Follow the guides' IP allowlisting and private URL recommendations.
 
 ## Development and verification
 
@@ -140,7 +140,7 @@ npm run postman:check
 
 `npm test` compiles TypeScript, verifies that generated Postman files match their source, tests the HTTP proxy/webhook behavior, and runs both collections through Newman using temporary loopback mock servers and placeholder credentials. It does not call Sandbox or Production, upload to real storage, generate a real PDF or spend account tokens. Live API and Portal delivery checks remain part of integration verification.
 
-Both collections, all three environments and webhook fixtures are maintained by [scripts/build-postman.cjs](scripts/build-postman.cjs). Change that source and regenerate the checked-in exports. Refer to the [review notes](docs/review-notes.md) for the before/after comparison and to [shared guide wording](docs/integration-examples.md) when updating the two documentation pages after merge.
+Both collections, all three environments and webhook fixtures are maintained by [scripts/build-postman.cjs](scripts/build-postman.cjs). Change that source and regenerate the checked-in exports.
 
 ## Project structure
 

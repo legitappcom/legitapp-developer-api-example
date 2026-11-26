@@ -29,7 +29,7 @@ The direct collection's fallback base URL is Sandbox. Selecting an environment c
 4. **Get authentication set**: set `authentication_set_id` to response `id`, and `turnaround_time_id` to your selected `turn_around_time_list[].id`. Review `guideline` and each required `placeholder`. IDs and availability can differ between environments; no catalog entry is selected automatically.
 5. Reset `images_json` to `[]`. In **Upload initial photo**, select a file under **Body > form-data > file**. Repeat for every required view. Each successful upload appends an image object to `images_json` and saves its URL as `image_url`.
 6. Optionally set `service_placeholder_id` before an upload to bind that image to a placeholder from this set. Leave it blank unless the field is supported/enabled for your integration. Clear or change it for the next view. The identifier is attached to the image object; it is not an upload API parameter.
-7. Set your optional `user_custom_code` and `user_remark`, then send **Submit authentication** once. The script saves the returned `authentication_id` as a string, preserving leading zeros. It uses `authentication_set_id` and `turnaround_time_id`; legacy `service_level_id` fields are not used.
+7. Set your optional `user_custom_code` and `user_remark`, then send **Submit authentication** once. The script saves the returned `authentication_id` as a string, preserving leading zeros. Use `authentication_set_id` and `turnaround_time_id` for the selected authentication set and turnaround time.
 8. Completion is asynchronous. Configure webhooks in the Developer Portal to receive messages, additional-photo requests and results. Run detail/PDF requests only when their prerequisites apply.
 
 For another case, reset `images_json` and `additional_images_json` to `[]` and choose its matching catalog selections. Scripts save state in the selected environment, not in shared collection variables.
@@ -42,7 +42,7 @@ For another case, reset `images_json` and `additional_images_json` to `[]` and c
 4. Use `language` to select the hosted page language. Optional `tag_enabled` requires physical-tag authentication where supported; `user_custom_code_enabled` requires a custom code, while `user_custom_code` applies it directly.
 5. Receive the submission and result webhooks on your registered endpoint. The Developer API detail/PDF endpoints can then access eligible same-account authentications.
 
-There is no example GET-intent/status endpoint: no such endpoint is exposed by this API. Follow the documented webhook lifecycle.
+Use webhook events to track the submission and authentication lifecycle.
 
 ## Details and conditional operations
 
