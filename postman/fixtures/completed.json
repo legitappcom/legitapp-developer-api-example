@@ -1,0 +1,14 @@
+{
+  "id": "evt_example_completed",
+  "object": "event",
+  "api-version": "v1",
+  "created_at": "2026-01-01 00:00:00",
+  "livemode": false,
+  "type": "authentication.completed",
+  "data": {
+    "event_type": "authentication.completed",
+    "authentication_id": "0123456789012345",
+    "user_custom_code": "postman-demo",
+    "result": "authentic"
+  }
+}

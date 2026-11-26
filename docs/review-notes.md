@@ -1,0 +1,24 @@
+# Integration example update: before, after and reason
+
+| Area | Before | After | Reason |
+| --- | --- | --- | --- |
+| Main Postman experience | Eight requests call a localhost example, with no collection introduction, environment exports or request descriptions. | A 16-request direct API collection defaults to Sandbox, with separate Sandbox and Production environments, prerequisites, scripts and illustrative responses. | Testers can try the documented API without installing Node or confusing proxy routes with public endpoints. |
+| Local example collection | Local routes and hardcoded IDs are the only collection. | A separate 22-request local collection covers the proxy plus six webhook simulations. | Keeps the executable application walkthrough while making its purpose explicit. |
+| Request state | Copy/paste image URLs and case IDs. | Environment-scoped image buffers and string IDs are saved automatically. Additional photos have their own buffer. Catalog choices remain explicit. | Reduces copying errors and avoids mixing environments or unrelated photos. |
+| Credentials | README says `LEGIT_APP_API_KEY`, implementation reads a different name; example starts with Production. | Consistent `LEGIT_APP_DEVELOPER_SECRET_KEY`, blank template credential and Sandbox default. Direct collection uses a private environment credential; local proxy uses `.env`. | Makes setup accurate and keeps credentials out of shared exports. |
+| API contract | Outdated TypeScript submission fields; missing detail, PDF, cancellation and intent examples. | Current types and matching routes/requests for both integration styles, including same-account App cases where supported. | Aligns examples with the current service and both guides. |
+| Lifecycle | Submission, additional photos and completion are insufficiently distinguished. | Explicit asynchronous workflow, Authentic/Replica detail/PDF restrictions, PDF reuse, separate public certificate page, and cancellation prerequisites. | Avoids implying that submission immediately produces results or a PDF, or that cancellation is universally available. |
+| Webhooks | Four switch cases, including an inactive result-updated emitter, with unrelated PaymentMethod comments. | Six documented event branches, awaited handlers, failure/retry behavior and synthetic fixtures. | Makes event routing understandable and consistent with the guides. |
+| Delivery security | No practical deployment explanation. | Production HTTPS, Sandbox HTTP support, optional private URL token, IP allowlisting guidance, and an explicit statement that signatures are not provided. | Explains the actual delivery protections without implying that JSON shape validation authenticates a sender. |
+| Errors and uploads | Proxy collapses creation into 200 and uses repetitive generic error extraction. | Preserves upstream status/errors, correct multipart boundary/field mapping, bounded timeouts, no redirects, and a 10 MB local upload limit. | Gives testers predictable responses and avoids exposing Axios request credentials or arbitrary upstream error bodies. |
+| Installation | `npm ci` fails because package/lockfile metadata disagree. README clone URL/folder are wrong. | Correct clone/setup instructions, synchronized lockfiles, removal of redundant `@types/form-data`, and maintained Multer 2.x. | Restores reproducible setup and updates the upload dependency used by the sample. |
+| Verification | No test command. | TypeScript build, local HTTP integration tests and both ready-to-import collections executed through Newman against mock APIs. | Exercises the code, exported JSON, Postman scripts, state capture and webhook handling without using real credentials or account tokens. |
+| Guide consistency | Both pages link to the old OSS-hosted local-only collection. | Shared replacement wording and repository-hosted collection/environment links are ready in `docs/integration-examples.md`. | Both pages can be updated consistently after merge, without linking publicly to unmerged files. |
+
+## Verification boundary
+
+The automated checks use loopback mock HTTP servers and synthetic data. They verify request construction, credential forwarding, multipart uploads, response/error handling, localization-header forwarding, string IDs, Postman prerequisites/state and webhook acknowledgement/retry behavior.
+
+They do not prove successful live Sandbox/Production authentication, real storage upload, first-time PDF rendering, refunds or inbound delivery from LegitApp. Those checks require an account-specific manual Sandbox walkthrough and the Portal's webhook tests. Production requests are not part of the automated suite.
+
+The default webhook handlers only log metadata. Persistent duplicate handling and application-specific actions remain the integrator's responsibility. There is no new signed webhook feature in this project.

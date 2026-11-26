@@ -83,3 +83,9 @@ data/
 
 .env
 .DS_Store
+
+# Compiled output and private local configuration/exports
+dist/
+.env.*
+!.env.example
+*.local.postman_environment.json
